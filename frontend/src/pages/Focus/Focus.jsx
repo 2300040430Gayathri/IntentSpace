@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { focusAPI } from '../../services/api';
 import Card from '../../components/Card/Card';
 import Button from '../../components/Button/Button';
-import Loader from '../../components/Loader/Loader';
+import { GenericPageSkeleton } from '../../components/Loader/Loader';
 import styles from './Focus.module.css';
 
 const STORAGE_KEY = 'intentspace_focus_timer';
@@ -205,7 +205,7 @@ const Focus = () => {
     setAiCoach(data.data);
   };
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <GenericPageSkeleton />;
 
   const timerContent = (
     <div className={`${styles.timerSection} ${fullscreen ? styles.fullscreen : ''}`}>

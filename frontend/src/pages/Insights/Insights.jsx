@@ -4,7 +4,7 @@ import { IoSparkles } from 'react-icons/io5';
 import { insightsAPI, aiAPI } from '../../services/api';
 import Card from '../../components/Card/Card';
 import Button from '../../components/Button/Button';
-import Loader from '../../components/Loader/Loader';
+import { DashboardSkeleton } from '../../components/Loader/Loader';
 import styles from './Insights.module.css';
 
 const COLORS = ['#2563EB', '#4F46E5', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
@@ -27,7 +27,7 @@ const Insights = () => {
     setAiReport(res.data);
   };
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <DashboardSkeleton />;
   if (!data) return null;
 
   const focusData = Object.entries(data.focus?.byDay || {}).map(([date, minutes]) => ({ date: date.slice(5), minutes }));

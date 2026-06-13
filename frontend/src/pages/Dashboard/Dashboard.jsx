@@ -5,7 +5,7 @@ import { IoAdd, IoTimer, IoCheckbox, IoBook } from 'react-icons/io5';
 import { dashboardAPI } from '../../services/api';
 import Card from '../../components/Card/Card';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import Loader, { Skeleton } from '../../components/Loader/Loader';
+import { DashboardSkeleton } from '../../components/Loader/Loader';
 import { moodEmojis, priorityColors } from '../../utils/helpers';
 import styles from './Dashboard.module.css';
 
@@ -17,8 +17,8 @@ const Dashboard = () => {
     dashboardAPI.get().then(({ data: res }) => setData(res.data)).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className={styles.page}><Skeleton height={200} /><Skeleton height={300} className={styles.mt} /></div>;
-  if (!data) return <Loader fullPage size="lg" />;
+  if (loading) return <DashboardSkeleton />;
+  if (!data) return <DashboardSkeleton />;
 
   const quickActions = [
     { label: 'Add Task', icon: IoAdd, path: '/tasks', color: '#2563EB' },

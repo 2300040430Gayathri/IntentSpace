@@ -9,25 +9,31 @@ const OTP_EXPIRE_MS = 10 * 60 * 1000;
 
 const normalizeEmail = (email) => (email || '').trim().toLowerCase();
 
-const generateOtp = () => String(Math.floor(100000 + Math.random() * 900000));
+const generateOtp = () => {
+  const otp = String(Math.floor(100000 + Math.random() * 900000));
+  console.log(`[AUTH_CONTROLLER][OTP_GENERATION] Generated 6-digit OTP code.`);
+  return otp;
+};
 
 const hashOtp = (otp) => crypto.createHash('sha256').update(otp).digest('hex');
 
 const logOtpDevMode = (email, otp) => {
-  console.log('[OTP DEV MODE]');
-  console.log(`Email: ${email}`);
-  console.log(`OTP: ${otp}`);
+  console.log(`[AUTH_CONTROLLER][OTP_DEV_MODE_FALLBACK] Email: ${email} | OTP: ${otp}`);
 };
 
 const assignOtp = async (user) => {
+  console.log(`[AUTH_CONTROLLER][OTP_FLOW] Assigning OTP for user: "${user.email}" (ID: ${user._id})`);
   const otp = generateOtp();
+  console.log(`[AUTH_CONTROLLER][OTP_FLOW] Hashing OTP for database storage.`);
   user.verificationToken = hashOtp(otp);
   user.verificationTokenExpire = Date.now() + OTP_EXPIRE_MS;
   await user.save({ validateBeforeSave: false });
+  console.log(`[AUTH_CONTROLLER][OTP_FLOW] User verification token updated in DB.`);
   try {
+    console.log(`[AUTH_CONTROLLER][OTP_FLOW] Sending verification email to: "${user.email}"`);
     await sendVerificationEmail(user, otp);
   } catch (err) {
-    console.error('Verification email failed:', err.message);
+    console.error('[AUTH_CONTROLLER][OTP_FLOW_ERROR] sendVerificationEmail threw an error:', err.message);
     logOtpDevMode(user.email, otp);
   }
   return OTP_EXPIRE_MS;
@@ -72,6 +78,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 exports.register = asyncHandler(async (req, res) => {
   const { name, password } = req.body;
   const email = normalizeEmail(req.body.email);
+  console.log(`[AUTH_CONTROLLER][REGISTER] Signup requested. Name: "${name}" | Email: "${email}"`);
 
   if (!email) {
     return res.status(400).json({ success: false, message: 'Email is required' });
@@ -102,6 +109,7 @@ exports.register = asyncHandler(async (req, res) => {
 exports.login = asyncHandler(async (req, res) => {
   const { password } = req.body;
   const email = normalizeEmail(req.body.email);
+  console.log(`[AUTH_CONTROLLER][LOGIN] Login requested. Email: "${email}"`);
 
   if (!email || !password) {
     return res.status(400).json({ success: false, message: 'Please provide email and password' });
@@ -247,20 +255,26 @@ exports.resendVerification = asyncHandler(async (req, res) => {
 
 exports.forgotPassword = asyncHandler(async (req, res) => {
   const email = normalizeEmail(req.body.email);
+  console.log(`[AUTH_CONTROLLER][FORGOT_PASSWORD] Forgot password requested for email: "${email}"`);
+  
   const user = email ? await User.findOne({ email }) : null;
   if (!user) {
+    console.warn(`[AUTH_CONTROLLER][FORGOT_PASSWORD] No user found with email: "${email}". Returning generic success.`);
     return res.status(200).json({ success: true, message: 'If email exists, reset OTP sent' });
   }
 
+  console.log(`[AUTH_CONTROLLER][FORGOT_PASSWORD] User found (ID: ${user._id}). Generating reset OTP.`);
   const otp = generateOtp();
   user.resetPasswordToken = hashOtp(otp);
   user.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
   await user.save({ validateBeforeSave: false });
+  console.log(`[AUTH_CONTROLLER][FORGOT_PASSWORD] User reset token updated in DB.`);
 
   try {
+    console.log(`[AUTH_CONTROLLER][FORGOT_PASSWORD] Sending password reset email to: "${user.email}"`);
     await sendPasswordResetEmail(user, otp);
   } catch (err) {
-    console.error('Password reset email failed:', err.message);
+    console.error('[AUTH_CONTROLLER][FORGOT_PASSWORD_ERROR] sendPasswordResetEmail threw an error:', err.message);
   }
   res.status(200).json({ success: true, message: 'If email exists, reset OTP sent' });
 });

@@ -5,7 +5,7 @@ import { feedbackAPI } from '../../services/api';
 import Card from '../../components/Card/Card';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
-import Loader from '../../components/Loader/Loader';
+import { GenericPageSkeleton } from '../../components/Loader/Loader';
 import styles from './Feedback.module.css';
 
 const CATEGORIES = [
@@ -82,7 +82,7 @@ const Feedback = () => {
     }
   };
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <GenericPageSkeleton />;
 
   return (
     <div className={styles.page}>

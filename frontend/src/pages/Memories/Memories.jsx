@@ -8,7 +8,7 @@ import Button from '../../components/Button/Button';
 import Modal from '../../components/Modal/Modal';
 import Input from '../../components/Input/Input';
 import Calendar from '../../components/Calendar/Calendar';
-import Loader from '../../components/Loader/Loader';
+import { GenericPageSkeleton } from '../../components/Loader/Loader';
 import { moodEmojis } from '../../utils/helpers';
 import styles from './Memories.module.css';
 
@@ -68,7 +68,7 @@ const Memories = () => {
     fetchMemories();
   };
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <GenericPageSkeleton />;
 
   const markedDates = memories.reduce((acc, m) => {
     acc[format(new Date(m.date), 'yyyy-MM-dd')] = 'completed';

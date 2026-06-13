@@ -31,35 +31,117 @@ const createTransporter = () => {
   return transporterInstance;
 };
 
+const sendViaHttp = async ({ to, subject, html }) => {
+  if (process.env.RESEND_API_KEY) {
+    console.log(`[EMAIL_SERVICE][HTTP] Sending via Resend API...`);
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: process.env.EMAIL_FROM || 'IntentSpace <onboarding@resend.dev>',
+        to,
+        subject,
+        html,
+      }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || `Resend API returned status ${response.status}`);
+    }
+    return { success: true, messageId: data.id };
+  }
+
+  if (process.env.SENDGRID_API_KEY) {
+    console.log(`[EMAIL_SERVICE][HTTP] Sending via SendGrid API...`);
+    const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: to }] }],
+        from: { email: process.env.EMAIL_FROM_ADDRESS || process.env.EMAIL_USER || 'noreply@intentspace.app' },
+        subject,
+        content: [{ type: 'text/html', value: html }],
+      }),
+    });
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.errors?.[0]?.message || `SendGrid API returned status ${response.status}`);
+    }
+    return { success: true };
+  }
+
+  return null;
+};
+
 const sendEmail = async ({ to, subject, html }) => {
+  console.log(`[EMAIL_SERVICE] Initiating email send. Recipient: "${to}" | Subject: "${subject}"`);
+
+  // Try sending via HTTP first if HTTP email APIs are configured (bypasses Render SMTP port blocking)
+  if (process.env.RESEND_API_KEY || process.env.SENDGRID_API_KEY) {
+    try {
+      const httpResult = await sendViaHttp({ to, subject, html });
+      if (httpResult) {
+        console.log(`[EMAIL_SERVICE][HTTP_SUCCESS] Email sent successfully via API to: "${to}"`);
+        return { success: true };
+      }
+    } catch (err) {
+      console.error(`[EMAIL_SERVICE][HTTP_ERROR] HTTP email API delivery failed. Error: ${err.message}`);
+      console.error(`[EMAIL_SERVICE][HTTP_ERROR] Full stack trace:`, err.stack);
+      throw err;
+    }
+  }
+
+  // Fallback to SMTP
   const transporter = createTransporter();
   const logOtpFromHtml = () => {
     const otpMatch = html.match(/letter-spacing: 8px[^>]*>(\d{6})</);
     if (otpMatch) {
-      console.log('[OTP DEV MODE]');
-      console.log(`Email: ${to}`);
-      console.log(`OTP: ${otpMatch[1]}`);
+      console.log(`[EMAIL_SERVICE][OTP_DEV_FALLBACK] Email: ${to} | OTP: ${otpMatch[1]}`);
     }
   };
 
   if (!transporter) {
-    console.log(`[Email Dev Mode] To: ${to} | Subject: ${subject}`);
+    console.warn(`[EMAIL_SERVICE][WARN] No email transporter or HTTP API key configured. Falling back to Dev Mode.`);
+    console.log(`[EMAIL_SERVICE][DEV_MODE] To: ${to} | Subject: ${subject}`);
     logOtpFromHtml();
     return { success: true, dev: true };
   }
 
+  const smtpConfig = {
+    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+    port: Number(process.env.EMAIL_PORT) || 587,
+    user: process.env.EMAIL_USER,
+    from: process.env.EMAIL_FROM || `IntentSpace <${process.env.EMAIL_USER}>`
+  };
+  console.log(`[EMAIL_SERVICE][SMTP_REQUEST] Configuration:`, smtpConfig);
+
   try {
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM || `IntentSpace <${process.env.EMAIL_USER}>`,
+    console.log(`[EMAIL_SERVICE][SMTP_SEND] Sending mail to: "${to}" via Nodemailer...`);
+    const info = await transporter.sendMail({
+      from: smtpConfig.from,
       to,
       subject,
       html,
     });
+    console.log(`[EMAIL_SERVICE][SMTP_RESPONSE] Success for: "${to}". Message ID: ${info.messageId}`);
+    console.log(`[EMAIL_SERVICE][SMTP_RESPONSE] Response details:`, {
+      accepted: info.accepted,
+      rejected: info.rejected,
+      response: info.response,
+      envelope: info.envelope
+    });
     return { success: true };
   } catch (err) {
-    console.error('Email send failed:', err.message);
+    console.error(`[EMAIL_SERVICE][SMTP_ERROR] SMTP delivery failed to "${to}". Error message: ${err.message}`);
+    console.error(`[EMAIL_SERVICE][SMTP_ERROR] Full stack trace:`, err.stack);
     logOtpFromHtml();
-    return { success: true, dev: true };
+    throw err; // Bubble up the error instead of returning success: true
   }
 };
 

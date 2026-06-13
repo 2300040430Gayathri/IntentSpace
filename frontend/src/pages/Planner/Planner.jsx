@@ -8,7 +8,7 @@ import Button from '../../components/Button/Button';
 import Modal from '../../components/Modal/Modal';
 import Input from '../../components/Input/Input';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import Loader from '../../components/Loader/Loader';
+import { PlannerSkeleton } from '../../components/Loader/Loader';
 import styles from './Planner.module.css';
 
 const SECTIONS = [
@@ -67,7 +67,7 @@ const Planner = () => {
     setAiReview(data.data);
   };
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <PlannerSkeleton />;
 
   const blocksBySection = (section) => planner?.blocks?.filter((b) => b.section === section).sort((a, b) => a.order - b.order) || [];
 

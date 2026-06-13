@@ -9,7 +9,7 @@ import Modal from '../../components/Modal/Modal';
 import Input from '../../components/Input/Input';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
 import Calendar from '../../components/Calendar/Calendar';
-import Loader from '../../components/Loader/Loader';
+import { DiarySkeleton } from '../../components/Loader/Loader';
 import { moodEmojis } from '../../utils/helpers';
 import styles from './Diary.module.css';
 
@@ -111,7 +111,7 @@ const Diary = () => {
     fetchEntries();
   };
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <DiarySkeleton />;
 
   const markedDates = entries.reduce((acc, e) => {
     acc[format(new Date(e.date), 'yyyy-MM-dd')] = 'completed';

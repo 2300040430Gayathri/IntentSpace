@@ -7,7 +7,7 @@ import Card from '../../components/Card/Card';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import RichTextEditor from '../../components/RichTextEditor/RichTextEditor';
-import Loader from '../../components/Loader/Loader';
+import { NotepadSkeleton } from '../../components/Loader/Loader';
 import styles from './Notepad.module.css';
 
 const Notepad = () => {
@@ -95,7 +95,7 @@ const Notepad = () => {
 
   const togglePin = () => setPinned((p) => !p);
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <NotepadSkeleton />;
 
   return (
     <div className={styles.page}>

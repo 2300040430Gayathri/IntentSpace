@@ -7,7 +7,7 @@ import { adminAPI } from '../../services/api';
 import Card from '../../components/Card/Card';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
-import Loader from '../../components/Loader/Loader';
+import { DashboardSkeleton } from '../../components/Loader/Loader';
 import styles from './Admin.module.css';
 
 const Admin = () => {
@@ -43,7 +43,7 @@ const Admin = () => {
     loadData(search, 1);
   };
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <DashboardSkeleton />;
 
   return (
     <div className={styles.page}>

@@ -4,7 +4,7 @@ import { IoMic, IoMicOff, IoCall, IoClose, IoVolumeHigh, IoVolumeMute } from 're
 import toast from 'react-hot-toast';
 import { voiceAPI } from '../../services/api';
 import Card from '../../components/Card/Card';
-import Loader from '../../components/Loader/Loader';
+import { GenericPageSkeleton } from '../../components/Loader/Loader';
 import styles from './Voice.module.css';
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -137,7 +137,7 @@ const Voice = () => {
     else if (inCall) startListening();
   };
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <GenericPageSkeleton />;
 
   return (
     <div className={styles.page}>

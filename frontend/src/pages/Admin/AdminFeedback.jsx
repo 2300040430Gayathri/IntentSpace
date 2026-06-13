@@ -8,7 +8,7 @@ import { adminAPI } from '../../services/api';
 import Card from '../../components/Card/Card';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
-import Loader from '../../components/Loader/Loader';
+import { NotepadSkeleton } from '../../components/Loader/Loader';
 import styles from './AdminFeedback.module.css';
 
 const CATEGORIES = [
@@ -80,7 +80,7 @@ const AdminFeedback = () => {
     }
   };
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <NotepadSkeleton />;
 
   return (
     <div className={styles.page}>

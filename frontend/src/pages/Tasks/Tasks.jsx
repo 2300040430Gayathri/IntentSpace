@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import { format } from 'date-fns';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -11,11 +11,11 @@ import Button from '../../components/Button/Button';
 import Modal from '../../components/Modal/Modal';
 import Input from '../../components/Input/Input';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import Loader from '../../components/Loader/Loader';
+import { TasksSkeleton } from '../../components/Loader/Loader';
 import { priorityColors, formatDate } from '../../utils/helpers';
 import styles from './Tasks.module.css';
 
-const SortableTask = ({ task, onToggle, onEdit, onDelete }) => {
+const SortableTask = memo(({ task, onToggle, onEdit, onDelete }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: task._id });
   const style = { transform: CSS.Transform.toString(transform), transition };
 
@@ -37,7 +37,7 @@ const SortableTask = ({ task, onToggle, onEdit, onDelete }) => {
       <button onClick={() => onDelete(task._id)} className={styles.deleteBtn}>×</button>
     </div>
   );
-};
+});
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -53,21 +53,28 @@ const Tasks = () => {
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       const { data } = await taskAPI.getAll({ status: filter });
       setTasks(data.data);
-      await taskAPI.carryForward();
     } catch {
       toast.error('Failed to load tasks');
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter]);
 
-  useEffect(() => { setLoading(true); fetchTasks(); }, [filter]);
+  // Run carryForward once when page mounts, not on every list update
+  useEffect(() => {
+    taskAPI.carryForward().catch(() => {});
+  }, []);
 
-  const handleSave = async (e) => {
+  useEffect(() => {
+    setLoading(true);
+    fetchTasks();
+  }, [fetchTasks]);
+
+  const handleSave = useCallback(async (e) => {
     e.preventDefault();
     const payload = { ...form, tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean), deadline: form.deadline || undefined };
     try {
@@ -85,22 +92,45 @@ const Tasks = () => {
     } catch {
       toast.error('Failed to save task');
     }
-  };
+  }, [form, editing, fetchTasks]);
 
-  const handleToggle = async (task) => {
+  const handleToggle = useCallback(async (task) => {
+    const prevTasks = [...tasks];
     const newStatus = task.status === 'completed' ? 'pending' : 'completed';
-    await taskAPI.update(task._id, { status: newStatus });
-    fetchTasks();
-  };
 
-  const handleDelete = async (id) => {
+    // Optimistically update local task status
+    setTasks((prev) => prev.map((t) => t._id === task._id ? { ...t, status: newStatus } : t));
+
+    try {
+      await taskAPI.update(task._id, { status: newStatus });
+      fetchTasks();
+    } catch {
+      toast.error('Failed to update task');
+      // Rollback to previous state on failure
+      setTasks(prevTasks);
+    }
+  }, [tasks, fetchTasks]);
+
+  const handleDelete = useCallback(async (id) => {
     if (!confirm('Delete task?')) return;
     await taskAPI.delete(id);
     toast.success('Task deleted');
     fetchTasks();
-  };
+  }, [fetchTasks]);
 
-  const handleDragEnd = async (event) => {
+  const handleEdit = useCallback((t) => {
+    setEditing(t);
+    setForm({
+      title: t.title,
+      description: t.description,
+      priority: t.priority,
+      deadline: t.deadline ? format(new Date(t.deadline), 'yyyy-MM-dd') : '',
+      tags: t.tags?.join(', ') || ''
+    });
+    setShowModal(true);
+  }, []);
+
+  const handleDragEnd = useCallback(async (event) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
     const oldIndex = tasks.findIndex((t) => t._id === active.id);
@@ -108,7 +138,7 @@ const Tasks = () => {
     const reordered = arrayMove(tasks, oldIndex, newIndex);
     setTasks(reordered);
     await taskAPI.reorder(reordered.map((t, i) => ({ id: t._id, order: i })));
-  };
+  }, [tasks]);
 
   const loadAIPriority = async () => {
     const { data } = await aiAPI.generate('task_prioritization');
@@ -118,7 +148,7 @@ const Tasks = () => {
   const completed = tasks.filter((t) => t.status === 'completed').length;
   const progress = tasks.length ? Math.round((completed / tasks.length) * 100) : 0;
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <TasksSkeleton />;
 
   return (
     <div className={styles.page}>
@@ -156,7 +186,7 @@ const Tasks = () => {
               <p className={styles.empty}>No {filter} tasks</p>
             ) : (
               tasks.map((task) => (
-                <SortableTask key={task._id} task={task} onToggle={handleToggle} onEdit={(t) => { setEditing(t); setForm({ title: t.title, description: t.description, priority: t.priority, deadline: t.deadline ? format(new Date(t.deadline), 'yyyy-MM-dd') : '', tags: t.tags?.join(', ') || '' }); setShowModal(true); }} onDelete={handleDelete} />
+                 <SortableTask key={task._id} task={task} onToggle={handleToggle} onEdit={handleEdit} onDelete={handleDelete} />
               ))
             )}
           </SortableContext>

@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { progressAPI } from '../../services/api';
 import Card from '../../components/Card/Card';
-import Loader from '../../components/Loader/Loader';
+import { DashboardSkeleton } from '../../components/Loader/Loader';
 import styles from './Progress.module.css';
 
 const Progress = () => {
@@ -20,7 +20,7 @@ const Progress = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <DashboardSkeleton />;
   if (!data) return null;
 
   return (

@@ -9,7 +9,7 @@ import Modal from '../../components/Modal/Modal';
 import Input from '../../components/Input/Input';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import Calendar from '../../components/Calendar/Calendar';
-import Loader from '../../components/Loader/Loader';
+import { GenericPageSkeleton } from '../../components/Loader/Loader';
 import { format } from 'date-fns';
 import styles from './Skills.module.css';
 
@@ -70,7 +70,7 @@ const Skills = () => {
     setAiInsights(data.data);
   };
 
-  if (loading) return <Loader fullPage />;
+  if (loading) return <GenericPageSkeleton />;
 
   if (id && skillDetail) {
     const markedDates = skillDetail.entries?.reduce((acc, e) => {
