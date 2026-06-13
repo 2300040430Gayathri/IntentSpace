@@ -1,0 +1,13 @@
+node_modules/
+dist/
+build/
+backups/
+.env
+.env.local
+.env.production
+.env.*
+.DS_Store
+*.log
+.vite/
+
+

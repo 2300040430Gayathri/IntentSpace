@@ -1,0 +1,42 @@
+.editor {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.toolbar {
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.toolbar button {
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: var(--subtext);
+  display: flex;
+  cursor: pointer;
+}
+
+.toolbar button:hover {
+  background: var(--card);
+  color: var(--text);
+}
+
+.content {
+  min-height: 200px;
+  padding: 14px;
+  outline: none;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.content:empty::before {
+  content: attr(data-placeholder);
+  color: var(--subtext);
+}

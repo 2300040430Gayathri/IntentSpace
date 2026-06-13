@@ -1,0 +1,35 @@
+.wrapper {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.label {
+  font-size: 0.8125rem;
+  color: var(--subtext);
+}
+
+.value {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.track {
+  background: var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.sm { height: 4px; }
+.md { height: 8px; }
+.lg { height: 12px; }
+
+.fill {
+  height: 100%;
+  border-radius: 100px;
+}

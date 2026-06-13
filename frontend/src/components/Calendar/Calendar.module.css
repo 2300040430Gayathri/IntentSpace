@@ -1,0 +1,119 @@
+.calendar {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.monthLabel {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.navBtn {
+  background: none;
+  border: none;
+  color: var(--subtext);
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  transition: all var(--transition);
+}
+
+.navBtn:hover {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--subtext);
+  padding: 4px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  color: var(--text);
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+}
+
+.day:hover {
+  background: var(--bg);
+}
+
+.today {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.selected {
+  background: var(--primary) !important;
+  color: white !important;
+}
+
+.completed::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.missed::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--danger);
+}
+
+.partial::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--warning);
+}
+
+.otherMonth {
+  opacity: 0.3;
+}
+
+.empty {}

@@ -1,0 +1,23 @@
+.page { width: 100%; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+.header h2 { font-size: 1.5rem; }
+.sub { color: var(--subtext); font-size: 0.875rem; }
+.headerActions { display: flex; gap: 10px; }
+.progress { margin-bottom: 24px; }
+.aiCard { margin-bottom: 20px; display: flex; justify-content: space-between; gap: 16px; }
+.sections { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.sectionTitle { font-size: 0.9375rem; margin-bottom: 12px; }
+.emptySection { color: var(--subtext); font-size: 0.8125rem; padding: 12px 0; }
+.block { display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--bg); border-radius: var(--radius-sm); margin-bottom: 8px; }
+.completed { opacity: 0.6; }
+.completed strong { text-decoration: line-through; }
+.blockCheck { background: none; border: none; font-size: 1rem; cursor: pointer; color: var(--subtext); }
+.blockInfo { flex: 1; }
+.blockInfo strong { display: block; font-size: 0.875rem; }
+.blockInfo span { font-size: 0.75rem; color: var(--subtext); }
+.deleteBtn { background: none; border: none; color: var(--danger); font-size: 1.25rem; cursor: pointer; }
+.form { display: flex; flex-direction: column; gap: 14px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field label { font-size: 0.875rem; font-weight: 500; display: block; margin-bottom: 6px; }
+.select { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card); color: var(--text); }
+@media (max-width: 768px) { .sections { grid-template-columns: 1fr; } }

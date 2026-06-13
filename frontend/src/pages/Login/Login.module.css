@@ -1,0 +1,149 @@
+.page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+.brand {
+  background: linear-gradient(135deg, #2563EB 0%, #4F46E5 50%, #7C3AED 100%);
+  color: white;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.brandTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-top: 24px;
+  letter-spacing: -0.03em;
+}
+
+.brandSubtitle {
+  font-size: 1.125rem;
+  opacity: 0.85;
+  margin-top: 12px;
+  line-height: 1.8;
+}
+
+.illustration {
+  margin-top: 48px;
+  height: 200px;
+  position: relative;
+}
+
+.centralOrb {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.float1, .float2, .float3 {
+  position: absolute;
+  font-size: 2rem;
+}
+
+.float1 { top: 20%; left: 20%; }
+.float2 { top: 60%; right: 25%; }
+.float3 { bottom: 15%; left: 40%; }
+
+.formSide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: var(--bg);
+  position: relative;
+}
+
+.themeToggle {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.formWrap {
+  width: 100%;
+  max-width: 400px;
+}
+
+.formWrap h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.formSub {
+  color: var(--subtext);
+  margin-bottom: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--subtext);
+  cursor: pointer;
+}
+
+.forgotLink {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+  color: var(--subtext);
+  font-size: 0.8125rem;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.signupLink {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.875rem;
+  color: var(--subtext);
+}
+
+@media (max-width: 900px) {
+  .page { grid-template-columns: 1fr; }
+  .brand { display: none; }
+  .formSide { padding: 32px 24px; }
+}

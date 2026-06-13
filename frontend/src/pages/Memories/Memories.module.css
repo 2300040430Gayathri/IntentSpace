@@ -1,0 +1,27 @@
+.page { width: 100%; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+.header h2 { font-size: 1.5rem; }
+.sub { color: var(--subtext); font-size: 0.875rem; }
+.headerActions { display: flex; gap: 10px; }
+.recapCard { margin-bottom: 20px; display: flex; justify-content: space-between; gap: 16px; }
+.onThisDay { margin-bottom: 20px; background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(236,72,153,0.08)); }
+.onThisDay h3 { margin-bottom: 12px; font-size: 0.9375rem; }
+.otdItem { display: flex; gap: 10px; padding: 8px 0; font-size: 0.875rem; }
+.otdItem span { display: block; font-size: 0.75rem; color: var(--subtext); }
+.layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; align-content: start; }
+.memoryCard { position: relative; }
+.memoryMood { font-size: 2rem; margin-bottom: 8px; }
+.memoryCard h3 { font-size: 1rem; margin-bottom: 8px; }
+.memoryDesc { font-size: 0.8125rem; color: var(--subtext); line-height: 1.6; margin-bottom: 12px; }
+.memoryFooter { display: flex; gap: 12px; font-size: 0.75rem; color: var(--subtext); }
+.memoryActions { display: flex; gap: 8px; margin-top: 12px; }
+.memoryActions button { background: none; border: none; font-size: 0.75rem; color: var(--primary); cursor: pointer; }
+.deleteBtn { color: var(--danger) !important; }
+.form { display: flex; flex-direction: column; gap: 14px; }
+.field label { font-size: 0.875rem; font-weight: 500; display: block; margin-bottom: 6px; }
+.textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card); color: var(--text); resize: vertical; }
+.moods { display: flex; gap: 8px; }
+.moodBtn { width: 40px; height: 40px; border: 2px solid var(--border); border-radius: 50%; background: var(--bg); font-size: 1.25rem; cursor: pointer; }
+.active { border-color: var(--primary); }
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }

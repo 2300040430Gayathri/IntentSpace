@@ -1,0 +1,27 @@
+.page { width: 100%; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.header h2 { font-size: 1.5rem; }
+.sub { color: var(--subtext); font-size: 0.875rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.skillCard { cursor: pointer; text-align: left; }
+.skillIcon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 12px; }
+.skillCard h3 { font-size: 1rem; margin-bottom: 4px; }
+.streak { font-size: 0.75rem; color: var(--subtext); margin-bottom: 12px; }
+.backBtn { display: flex; align-items: center; gap: 6px; background: none; border: none; color: var(--primary); font-size: 0.875rem; margin-bottom: 16px; cursor: pointer; }
+.detailHeader { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.detailHeader h2 { font-size: 1.5rem; }
+.detailHeader p { color: var(--subtext); font-size: 0.875rem; }
+.detailActions { margin-left: auto; display: flex; gap: 10px; }
+.aiCard { margin-bottom: 20px; display: flex; justify-content: space-between; gap: 16px; }
+.progress { margin-bottom: 24px; }
+.detailLayout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
+.entryItem { padding: 12px 0; border-bottom: 1px solid var(--border); }
+.entryItem strong { font-size: 0.8125rem; color: var(--primary); }
+.entryItem p { font-size: 0.875rem; margin-top: 4px; }
+.entryNotes { font-size: 0.75rem; color: var(--subtext); }
+.form { display: flex; flex-direction: column; gap: 14px; }
+.field label { font-size: 0.875rem; font-weight: 500; display: block; margin-bottom: 6px; }
+.textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card); color: var(--text); resize: vertical; }
+.presets { display: flex; flex-wrap: wrap; gap: 8px; }
+.preset { padding: 6px 12px; border: 1px solid var(--border); border-radius: 100px; background: var(--bg); font-size: 0.8125rem; cursor: pointer; color: var(--text); }
+@media (max-width: 900px) { .detailLayout { grid-template-columns: 1fr; } }

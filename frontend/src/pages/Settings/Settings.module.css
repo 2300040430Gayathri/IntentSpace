@@ -1,0 +1,17 @@
+.page { width: 100%; max-width: 640px; }
+.page h2 { font-size: 1.5rem; margin-bottom: 4px; }
+.sub { color: var(--subtext); font-size: 0.875rem; margin-bottom: 24px; }
+.sections { display: flex; flex-direction: column; gap: 16px; }
+.sections h3 { font-size: 0.9375rem; margin-bottom: 16px; }
+.form { display: flex; flex-direction: column; gap: 14px; }
+.field label { font-size: 0.875rem; font-weight: 500; display: block; margin-bottom: 6px; }
+.textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); resize: vertical; font-size: 0.875rem; }
+.themeOptions { display: flex; gap: 10px; }
+.themeBtn { padding: 12px 24px; border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); cursor: pointer; font-size: 0.875rem; color: var(--text); }
+.active { border-color: var(--primary); background: rgba(37,99,235,0.08); }
+.toggles { display: flex; flex-direction: column; gap: 12px; }
+.toggle { display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem; cursor: pointer; }
+.toggle input { width: 18px; height: 18px; accent-color: var(--primary); }
+.dataActions { display: flex; gap: 10px; }
+.importBtn { display: inline-flex; align-items: center; padding: 10px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 500; cursor: pointer; color: var(--text); }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }

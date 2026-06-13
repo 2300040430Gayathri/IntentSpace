@@ -1,0 +1,19 @@
+.page { width: 100%; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.header h2 { font-size: 1.5rem; }
+.sub { color: var(--subtext); font-size: 0.875rem; }
+.statsGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.statCard { text-align: center; padding: 20px; }
+.statValue { display: block; font-size: 1.75rem; font-weight: 700; color: var(--primary); }
+.statLabel { font-size: 0.75rem; color: var(--subtext); }
+.levelBadge { display: inline-block; padding: 6px 16px; background: rgba(37,99,235,0.1); color: var(--primary); border-radius: 100px; font-weight: 600; font-size: 0.875rem; margin-top: 8px; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.trends { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+.trendItem { text-align: center; padding: 16px; background: var(--bg); border-radius: var(--radius-sm); }
+.trendNum { display: block; font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+.timeline { margin-top: 24px; }
+.timelineItem { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.timelineDate { min-width: 100px; font-size: 0.8125rem; color: var(--subtext); }
+.timelineContent strong { display: block; font-size: 0.9375rem; margin-bottom: 4px; }
+.timelineMeta { font-size: 0.75rem; color: var(--subtext); }
+@media (max-width: 900px) { .charts { grid-template-columns: 1fr; } }

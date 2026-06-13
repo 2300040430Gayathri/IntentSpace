@@ -1,0 +1,120 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: var(--bg);
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+}
+
+.steps {
+  display: flex;
+  gap: 8px;
+  margin: 32px 0;
+}
+
+.step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--subtext);
+}
+
+.stepNum {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+.active .stepNum {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: white;
+}
+
+.done .stepNum {
+  border-color: var(--success);
+  background: var(--success);
+  color: white;
+}
+
+.form h2 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.sub {
+  color: var(--subtext);
+  margin-bottom: 24px;
+  font-size: 0.875rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.verifyBox {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+}
+
+.verifyIcon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.verifyBox p {
+  font-size: 0.875rem;
+  color: var(--subtext);
+  line-height: 1.6;
+}
+
+.field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.875rem;
+  resize: vertical;
+  outline: none;
+}
+
+.textarea:focus {
+  border-color: var(--primary);
+}
+
+.loginLink {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.875rem;
+  color: var(--subtext);
+}

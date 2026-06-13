@@ -1,0 +1,19 @@
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition);
+  text-align: left;
+  width: 100%;
+}
+
+button.card {
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+
+.padded {
+  padding: 20px;
+}

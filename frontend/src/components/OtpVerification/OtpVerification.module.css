@@ -1,0 +1,26 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sub {
+  color: var(--subtext);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.timer {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--subtext);
+  padding: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.timer.expired {
+  color: var(--danger, #EF4444);
+  border-color: var(--danger, #EF4444);
+}

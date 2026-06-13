@@ -1,0 +1,20 @@
+.page { width: 100%; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+.header h2 { font-size: 1.5rem; }
+.sub { color: var(--subtext); font-size: 0.875rem; }
+.headerActions { display: flex; gap: 10px; align-items: center; }
+.periodBtn { padding: 8px 16px; border: 1px solid var(--border); border-radius: 100px; background: var(--card); color: var(--subtext); font-size: 0.8125rem; cursor: pointer; }
+.active { background: var(--primary); color: white; border-color: var(--primary); }
+.aiCard { margin-bottom: 20px; display: flex; justify-content: space-between; gap: 16px; }
+.statsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.statCard { text-align: center; }
+.statIcon { font-size: 1.5rem; display: block; margin-bottom: 8px; }
+.statValue { display: block; font-size: 1.75rem; font-weight: 700; color: var(--primary); }
+.statLabel { font-size: 0.75rem; color: var(--subtext); }
+.charts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.charts h3 { font-size: 0.9375rem; margin-bottom: 16px; }
+.empty { color: var(--subtext); text-align: center; padding: 40px; font-size: 0.875rem; }
+.skillStat { text-align: center; padding: 40px; }
+.bigNum { display: block; font-size: 3rem; font-weight: 700; color: var(--secondary); }
+@media (max-width: 1024px) { .statsGrid { grid-template-columns: repeat(2, 1fr); } .charts { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .statsGrid { grid-template-columns: 1fr; } }

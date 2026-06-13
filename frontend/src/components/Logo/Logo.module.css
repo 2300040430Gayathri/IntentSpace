@@ -1,0 +1,40 @@
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.bg { color: var(--primary); }
+
+.sm .icon { width: 28px; height: 28px; }
+.md .icon { width: 36px; height: 36px; }
+.lg .icon { width: 48px; height: 48px; }
+
+.name {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.lg .name { font-size: 1.5rem; }
+
+.tagline {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--subtext);
+  font-weight: 400;
+}
+
+.light .name { color: white; }
+.light .tagline { color: rgba(255,255,255,0.7); }
+.light .bg { color: white; }
+
+.text {
+  display: flex;
+  flex-direction: column;
+}

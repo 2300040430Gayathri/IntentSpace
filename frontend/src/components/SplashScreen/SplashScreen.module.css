@@ -1,0 +1,36 @@
+.splash {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #F8F9FB 0%, #EEF2FF 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 9999;
+}
+
+[data-theme='dark'] .splash {
+  background: linear-gradient(135deg, #0F1117 0%, #1A1D27 100%);
+}
+
+.tagline {
+  color: var(--subtext);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.loader {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-top: 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

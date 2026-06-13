@@ -1,0 +1,161 @@
+.page { width: 100%; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.aiCard {
+  grid-column: span 3;
+  background: linear-gradient(135deg, rgba(37,99,235,0.05), rgba(79,70,229,0.05));
+}
+
+.aiHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.aiHeader h3 { font-size: 1rem; }
+
+.aiText {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--text);
+  white-space: pre-line;
+}
+
+.cardTitle {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.empty {
+  color: var(--subtext);
+  font-size: 0.875rem;
+}
+
+.taskList { list-style: none; }
+
+.taskItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.priority {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.viewAll {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.habitList { display: flex; flex-direction: column; gap: 10px; }
+
+.habitItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.habitIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.habitInfo { flex: 1; display: flex; flex-direction: column; font-size: 0.875rem; }
+.streak { font-size: 0.75rem; color: var(--subtext); }
+
+.check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--subtext);
+}
+
+.checked {
+  background: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+
+.focusStat { text-align: center; margin-bottom: 8px; }
+.focusNum { font-size: 2.5rem; font-weight: 700; color: var(--primary); }
+.focusUnit { display: block; font-size: 0.8125rem; color: var(--subtext); }
+.focusSessions { text-align: center; font-size: 0.8125rem; color: var(--subtext); margin-bottom: 16px; }
+
+.skillBar { margin-bottom: 12px; }
+
+.memoryItem {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+
+.memoryDate { display: block; font-size: 0.75rem; color: var(--subtext); }
+
+.moodDisplay { text-align: center; padding: 16px; }
+.moodEmoji { font-size: 3rem; display: block; }
+.moodLabel { text-transform: capitalize; color: var(--subtext); font-size: 0.875rem; }
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: all var(--transition);
+  text-decoration: none;
+}
+
+.actionBtn:hover {
+  background: color-mix(in srgb, var(--action-color) 10%, var(--bg));
+  color: var(--action-color);
+}
+
+.mt { margin-top: 20px; }
+
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .aiCard { grid-column: span 2; }
+}
+
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+  .aiCard { grid-column: span 1; }
+}
